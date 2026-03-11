@@ -9,16 +9,22 @@ name: "\"name\"" ":" ESCAPED_STRING
 
 args: "\"args\"" ":" arglist
 
-arglist: "{"  individual_arg ("," individual_arg) "}"
+arglist: "{"  individual_arg ("," individual_arg)* "}"
 
 individual_arg: ESCAPED_STRING ":" value 
 
 value: ESCAPED_STRING
     |  NUMBER
-    |  dictionary
+    |  list
+    |  dict
+    |  bool
 
-dictionary: 
-    
+bool: "true"
+    | "false"
+
+list: "[" (value)* "]"
+
+dict: "{" value ":" value ("," value ":" value)* "}"
 
 // imports WORD, NUMBER from library
 %import common.ESCAPED_STRING
@@ -26,4 +32,5 @@ dictionary:
 %import common.WS
 
 // Disregard spaces in text
-%ignore WS       
+%ignore WS
+
