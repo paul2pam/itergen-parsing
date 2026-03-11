@@ -1,0 +1,29 @@
+// A bunch of words
+start: tool_call
+
+// Allow optional punctuation after each word
+
+tool_call: "{" name "," WS* args "}"
+
+name: "\"name\"" ":" ESCAPED_STRING
+
+args: "\"args\"" ":" arglist
+
+arglist: "{"  individual_arg ("," individual_arg) "}"
+
+individual_arg: ESCAPED_STRING ":" value 
+
+value: ESCAPED_STRING
+    |  NUMBER
+    |  dictionary
+
+dictionary: 
+    
+
+// imports WORD, NUMBER from library
+%import common.ESCAPED_STRING
+%import common.NUMBER
+%import common.WS
+
+// Disregard spaces in text
+%ignore WS       
